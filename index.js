@@ -38,11 +38,23 @@ const router = jsonServer.router(db);
 const middlewares = jsonServer.defaults();
 
 // const PORT = 3000;
+server.use(
+  cors({
+      origin: true,
+      credentials: true,
+      preflightContinue: false,
+      methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  })
+);
+server.options('*', cors());
+
+server.use(middlewares);
+server.use(router);
 
 const state = { velocity: {}, blocked: {} };
 
-server.use(middlewares);
-server.use(cors());
+// server.use(middlewares);
+// server.use(cors());
 
 server.patch('/engine', (req, res) => {
     const { id, status } = req.query;
@@ -95,7 +107,7 @@ server.patch('/engine', (req, res) => {
     }
 });
 
-server.use(router);
+// server.use(router);
 server.listen(process.env.PORT || 5000, () => {
     console.log('Server is running');
 });
