@@ -43,7 +43,7 @@ server.use(
       origin: true,
       credentials: true,
       preflightContinue: false,
-      methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+      methods: 'GET,HEAD,PUT,POST,DELETE',
   })
 );
 server.options('*', cors());
@@ -51,9 +51,9 @@ server.options('*', cors());
 server.use(middlewares);
 server.use(router);
 server.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
-  // res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
+  res.header('Access-Control-Allow-Origin', 'http://localhost:8080')
+  res.header('Access-Control-Allow-Headers', '*')
+  next()
 })
 
 const state = { velocity: {}, blocked: {} };
